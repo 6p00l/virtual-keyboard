@@ -1,7 +1,4 @@
 const input = document.getElementById("input_main");
-function change(test) {
-  inputV = test;
-}
 
 const keysEN = [
   { "`": "Backquote" },
@@ -144,6 +141,8 @@ document.body.appendChild(wrapper);
 
 const Main = {
   caps: false,
+  alt: false,
+  shift: false,
   layout(lang, letterCase) {
     for (let i = 0; i < lang.length; i++) {
       const container = document.createElement("div");
@@ -157,7 +156,7 @@ const Main = {
         } else key = k;
         code = lang[i][k];
       }
-      const keyDiv = `<div class='key ${code}' >${key}</div>`;
+      const keyDiv = `<div class='key ${code} ${key}' >${key}</div>`;
       container.innerHTML = keyDiv;
       wrapper.appendChild(container);
 
@@ -166,7 +165,12 @@ const Main = {
     }
   },
   clone(e) {
-    let activeKey = document.querySelector(`.${e}`);
+    if (e.key == "Tab") {
+      e.preventDefault();
+      input.value += "\t";
+      return;
+    }
+    const activeKey = document.querySelector(`.${e.code}`);
     activeKey.parentNode.classList.toggle("active");
   },
 
@@ -181,30 +185,88 @@ const Main = {
         });
         break;
       case "Backspace":
+        div.addEventListener("click", () => {
+          let pos = input.selectionStart;
+
+          input.value = input.value.slice(0, pos - 1) + input.value.slice(pos);
+          input.selectionStart = pos - 1;
+        });
+        break;
+
       case "Tab":
+        div.addEventListener("click", () => {
+          let pos = input.selectionStart;
+
+          input.value =
+            input.value.slice(0, pos) + "\t" + input.value.slice(pos);
+          input.selectionStart = pos + 1;
+        });
+        break;
       case "Delete":
+        div.addEventListener("click", () => {
+          let pos = input.selectionStart;
+
+          input.value = input.value.slice(0, pos) + input.value.slice(pos + 1);
+
+          input.selectionStart = pos;
+        });
+        break;
       case "Alt":
+        div.addEventListener("click", () => {
+          div.classList.toggle("active");
+        });
+        break;
       case "Shift":
+        div.addEventListener("click", () => {
+          div.classList.toggle("active");
+        });
+        break;
       case "Enter":
+        div.addEventListener("click", () => {
+          let pos = input.selectionStart;
+
+          input.value =
+            input.value.slice(0, pos) + "\n" + input.value.slice(pos);
+          input.selectionStart = pos + 1;
+        });
+        break;
       case "ArrowLeft":
+        div.addEventListener("click", () => {
+          let pos = input.selectionStart;
+
+          input.selectionStart = pos - 1;
+        });
+        break;
       case "ArrowRight":
+        div.addEventListener("click", () => {
+          let pos = input.selectionStart;
+
+          input.selectionStart = pos + 1;
+        });
+        break;
       case "AroowUp":
+        break;
       case "ArrowDown":
+        break;
 
       default:
         div.addEventListener("click", () => {
-          console.log(123);
-          input.value += key;
+          let pos = input.selectionStart;
+          input.value =
+            input.value.slice(0, pos) + key + input.value.slice(pos);
+          input.selectionStart = pos + 1;
         });
         break;
     }
   },
   realEvents() {
-    input.addEventListener("keydown", (e) => this.clone(e.code));
-    input.addEventListener("keyup", (e) => this.clone(e.code));
+    input.addEventListener("keydown", (e) => this.clone(e));
+    input.addEventListener("keyup", (e) => this.clone(e));
   },
 };
 
 window.addEventListener("DOMContentLoaded", () => {
   Main.layout(keysEN, Main.caps);
+  Main.shiftKey = document.querySelector(`.Shift`).parentNode;
+  Main.altKey = document.querySelector(`.Alt`).parentNode;
 });

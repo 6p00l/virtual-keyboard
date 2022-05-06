@@ -28,7 +28,7 @@ body {
     background-color:blueviolet;
 }
 
-input {
+textarea {
     margin: auto;
     width: 500px;
     height: 100px;
