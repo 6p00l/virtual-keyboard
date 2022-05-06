@@ -23,3 +23,13 @@ body {
     width: 60px;
     height: 30px;
 }
+
+.active{
+    background-color:blueviolet;
+}
+
+input {
+    margin: auto;
+    width: 500px;
+    height: 100px;
+}

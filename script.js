@@ -1,7 +1,6 @@
-let input = document.getElementById("input_main").value;
+const input = document.getElementById("input_main");
 function change(test) {
-  input = test;
-  console.log(input);
+  inputV = test;
 }
 
 const keysEN = [
@@ -35,36 +34,34 @@ const keysEN = [
   { "\\": "Backslash" },
   { Delete: "Delete" },
   { CapsLock: "CapsLock" },
-  { A: "KeyA" },
-  { S: "KeyS" },
-  { D: "KeyD" },
-  { F: "KeyF" },
-  { G: "KeyG" },
-  { H: "KeyH" },
-  { J: "KeyJ" },
-  { K: "KeyK" },
-  { L: "KeyL" },
+  { a: "KeyA" },
+  { s: "KeyS" },
+  { d: "KeyD" },
+  { f: "KeyF" },
+  { g: "KeyG" },
+  { h: "KeyH" },
+  { j: "KeyJ" },
+  { k: "KeyK" },
+  { l: "KeyL" },
   { ";": "Semicolon" },
   { "'": "Quote" },
   { Enter: "Enter" },
   { Shift: "ShiftLeft" },
-  { Z: "KeyZ" },
-  { X: "KeyX" },
-  { C: "KeyC" },
-  { V: "KeyV" },
-  { B: "KeyB" },
-  { N: "KeyN" },
-  { M: "KeyM" },
+  { z: "KeyZ" },
+  { x: "KeyX" },
+  { c: "KeyC" },
+  { v: "KeyV" },
+  { b: "KeyB" },
+  { n: "KeyN" },
+  { m: "KeyM" },
   { ",": "Comma" },
   { ".": "Period" },
   { "/": "Slash" },
   { Shift: "ShiftRight" },
   { Control: "ControlLeft" },
-  { Meta: "MetaLeft" },
   { Alt: "AltLeft" },
   { " ": "Space" },
   { Alt: "AltRight" },
-  { Meta: "MetaRight" },
   { Control: "ControlRight" },
   { ArrowLeft: "ArrowLeft" },
   { ArrowUp: "ArrowUp" },
@@ -145,18 +142,69 @@ const wrapper = document.createElement("div");
 wrapper.className = "wrapper";
 document.body.appendChild(wrapper);
 
-for (let i = 0; i < keysEN.length; i++) {
-  const container = document.createElement("div");
-  container.className = "button";
+const Main = {
+  caps: false,
+  layout(lang, letterCase) {
+    for (let i = 0; i < lang.length; i++) {
+      const container = document.createElement("div");
+      container.className = "button";
 
-  let key;
-  let code;
-  for (const k in keysEN[i]) {
-    key = k;
-    code = keysEN[i][k];
-  }
-  const key_div = `<div class='key ${code}' >${key}</div>`;
-  container.innerHTML = key_div;
+      let key;
+      let code;
+      for (const k in lang[i]) {
+        if (letterCase === true) {
+          key = k.toUpperCase();
+        } else key = k;
+        code = lang[i][k];
+      }
+      const keyDiv = `<div class='key ${code}' >${key}</div>`;
+      container.innerHTML = keyDiv;
+      wrapper.appendChild(container);
 
-  wrapper.appendChild(container);
-}
+      this.keyEvents(key, container);
+      this.realEvents();
+    }
+  },
+  clone(e) {
+    let activeKey = document.querySelector(`.${e}`);
+    activeKey.parentNode.classList.toggle("active");
+  },
+
+  keyEvents(key, div) {
+    switch (key) {
+      case "CapsLock":
+        div.addEventListener("click", () => {
+          this.caps = !this.caps;
+          console.log(this.caps);
+          wrapper.innerHTML = "";
+          this.layout(keysEN, this.caps);
+        });
+        break;
+      case "Backspace":
+      case "Tab":
+      case "Delete":
+      case "Alt":
+      case "Shift":
+      case "Enter":
+      case "ArrowLeft":
+      case "ArrowRight":
+      case "AroowUp":
+      case "ArrowDown":
+
+      default:
+        div.addEventListener("click", () => {
+          console.log(123);
+          input.value += key;
+        });
+        break;
+    }
+  },
+  realEvents() {
+    input.addEventListener("keydown", (e) => this.clone(e.code));
+    input.addEventListener("keyup", (e) => this.clone(e.code));
+  },
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  Main.layout(keysEN, Main.caps);
+});
