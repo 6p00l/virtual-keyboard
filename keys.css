@@ -1,15 +1,30 @@
 .Space {
-    width: 200px;
+    width: 250px;
 }
 
-.Shift {
-    width: 90px;
+.ShiftLeft {
+    width: 80px;
+}
+.ShiftRight {
+    width: 80px;
 }
 
-.Control {
-    width: 90px;
+.ControlLeft {
+    width: 93px;
+}
+.ControlRight {
+    width: 93px;
 }
 
 .Alt {
     width: 80px;
 }
+
+.ArrowLeft {
+    margin-left: 107px;
+}
+
+.ArrowUp {
+    margin: 0 13px 0 13px;
+}
+

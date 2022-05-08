@@ -1,138 +1,138 @@
 const input = document.getElementById("input_main");
-
+let enLang = true;
 const keysEN = [
-  { "`": "Backquote" },
-  { 1: "Digit1" },
-  { 2: "Digit2" },
-  { 3: "Digit3" },
-  { 4: "Digit4" },
-  { 5: "Digit5" },
-  { 6: "Digit6" },
-  { 7: "Digit7" },
-  { 8: "Digit8" },
-  { 9: "Digit9" },
-  { 0: "Digit0" },
-  { "-": "Minus" },
-  { "=": "Equal" },
-  { Backspace: "Backspace" },
-  { Tab: "Tab" },
-  { q: "KeyQ" },
-  { w: "KeyW" },
-  { e: "KeyE" },
-  { r: "KeyR" },
-  { t: "KeyT" },
-  { y: "KeyY" },
-  { u: "KeyU" },
-  { i: "KeyI" },
-  { o: "KeyO" },
-  { p: "KeyP" },
-  { "[": "BracketLeft" },
-  { "]": "BracketRight" },
-  { "\\": "Backslash" },
-  { Delete: "Delete" },
-  { CapsLock: "CapsLock" },
-  { a: "KeyA" },
-  { s: "KeyS" },
-  { d: "KeyD" },
-  { f: "KeyF" },
-  { g: "KeyG" },
-  { h: "KeyH" },
-  { j: "KeyJ" },
-  { k: "KeyK" },
-  { l: "KeyL" },
-  { ";": "Semicolon" },
-  { "'": "Quote" },
-  { Enter: "Enter" },
-  { Shift: "ShiftLeft" },
-  { z: "KeyZ" },
-  { x: "KeyX" },
-  { c: "KeyC" },
-  { v: "KeyV" },
-  { b: "KeyB" },
-  { n: "KeyN" },
-  { m: "KeyM" },
-  { ",": "Comma" },
-  { ".": "Period" },
-  { "/": "Slash" },
-  { Shift: "ShiftRight" },
-  { ArrowUp: "ArrowUp" },
-  { Control: "ControlLeft" },
-  { Alt: "AltLeft" },
-  { " ": "Space" },
-  { Alt: "AltRight" },
-  { Control: "ControlRight" },
-  { ArrowLeft: "ArrowLeft" },
-  { ArrowRight: "ArrowRight" },
-  { ArrowDown: "ArrowDown" },
+  ["`", "Backquote"],
+  [1, "Digit1"],
+  [2, "Digit2"],
+  [3, "Digit3"],
+  [4, "Digit4"],
+  [5, "Digit5"],
+  [6, "Digit6"],
+  [7, "Digit7"],
+  [8, "Digit8"],
+  [9, "Digit9"],
+  [0, "Digit0"],
+  ["-", "Minus"],
+  ["=", "Equal"],
+  ["Backspace", "Backspace"],
+  ["Tab", "Tab"],
+  ["q", "KeyQ"],
+  ["w", "KeyW"],
+  ["e", "KeyE"],
+  ["r", "KeyR"],
+  ["t", "KeyT"],
+  ["y", "KeyY"],
+  ["u", "KeyU"],
+  ["i", "KeyI"],
+  ["o", "KeyO"],
+  ["p", "KeyP"],
+  ["[", "BracketLeft"],
+  ["]", "BracketRight"],
+  ["Delete", "Delete"],
+  ["CapsLock", "CapsLock"],
+  ["a", "KeyA"],
+  ["s", "KeyS"],
+  ["d", "KeyD"],
+  ["f", "KeyF"],
+  ["g", "KeyG"],
+  ["h", "KeyH"],
+  ["j", "KeyJ"],
+  ["k", "KeyK"],
+  ["l", "KeyL"],
+  [";", "Semicolon"],
+  ["'", "Quote"],
+  ["\\", "Backslash"],
+  ["Enter", "Enter"],
+  ["Shift", "ShiftLeft"],
+  ["z", "KeyZ"],
+  ["x", "KeyX"],
+  ["c", "KeyC"],
+  ["v", "KeyV"],
+  ["b", "KeyB"],
+  ["n", "KeyN"],
+  ["m", "KeyM"],
+  [",", "Comma"],
+  [".", "Period"],
+  ["/", "Slash"],
+  ["AU", "ArrowUp"],
+  ["Shift", "ShiftRight"],
+  ["Control", "ControlLeft"],
+  ["Alt", "AltLeft"],
+  [" ", "Space"],
+  ["Alt", "AltRight"],
+  ["Control", "ControlRight"],
+  ["AL", "ArrowLeft"],
+  ["AD", "ArrowDown"],
+  ["AR", "ArrowRight"],
 ];
 
 const keysRU = [
-  { ё: "Backquote" },
-  { 1: "Digit1" },
-  { 2: "Digit2" },
-  { 3: "Digit3" },
-  { 4: "Digit4" },
-  { 5: "Digit5" },
-  { 6: "Digit6" },
-  { 7: "Digit7" },
-  { 8: "Digit8" },
-  { 9: "Digit9" },
-  { 0: "Digit0" },
-  { "-": "Minus" },
-  { "=": "Equal" },
-  { Backspace: "Backspace" },
-  { Tab: "Tab" },
-  { й: "KeyQ" },
-  { ц: "KeyW" },
-  { у: "KeyE" },
-  { к: "KeyR" },
-  { е: "KeyT" },
-  { н: "KeyY" },
-  { г: "KeyU" },
-  { ш: "KeyI" },
-  { щ: "KeyO" },
-  { з: "KeyP" },
-  { х: "BracketLeft" },
-  { ъ: "BracketRight" },
-  { "\\": "Backslash" },
-  { Delete: "Delete" },
-  { CapsLock: "CapsLock" },
-  { Ф: "KeyA" },
-  { Ы: "KeyS" },
-  { В: "KeyD" },
-  { А: "KeyF" },
-  { П: "KeyG" },
-  { Р: "KeyH" },
-  { О: "KeyJ" },
-  { Л: "KeyK" },
-  { Д: "KeyL" },
-  { Ж: "Semicolon" },
-  { Э: "Quote" },
-  { Enter: "Enter" },
-  { Shift: "ShiftLeft" },
-  { Я: "KeyZ" },
-  { Ч: "KeyX" },
-  { С: "KeyC" },
-  { М: "KeyV" },
-  { И: "KeyB" },
-  { Т: "KeyN" },
-  { Ь: "KeyM" },
-  { Б: "Comma" },
-  { Ю: "Period" },
-  { ".": "Slash" },
-  { Shift: "ShiftRight" },
-  { ArrowUp: "ArrowUp" },
-  { Control: "ControlLeft" },
-  { Meta: "MetaLeft" },
-  { Alt: "AltLeft" },
-  { " ": "Space" },
-  { Control: "ControlLeft" },
-  { Alt: "AltRight" },
-  { Meta: "MetaRight" },
-  { Control: "ControlRight" },
-  { ArrowLeft: "ArrowLeft" },
-  { ArrowRight: "ArrowRight" },
-  { ArrowDown: "ArrowDown" },
+  ["ё", "Backquote"],
+  [1, "Digit1"],
+  [2, "Digit2"],
+  [3, "Digit3"],
+  [4, "Digit4"],
+  [5, "Digit5"],
+  [6, "Digit6"],
+  [7, "Digit7"],
+  [8, "Digit8"],
+  [9, "Digit9"],
+  [0, "Digit0"],
+  ["-", "Minus"],
+  ["=", "Equal"],
+  ["Backspace", "Backspace"],
+  ["Tab", "Tab"],
+  ["й", "KeyQ"],
+  ["ц", "KeyW"],
+  ["у", "KeyE"],
+  ["к", "KeyR"],
+  ["е", "KeyT"],
+  ["н", "KeyY"],
+  ["г", "KeyU"],
+  ["ш", "KeyI"],
+  ["щ", "KeyO"],
+  ["з", "KeyP"],
+  ["х", "BracketLeft"],
+  ["ъ", "BracketRight"],
+  ["\\", "Backslash"],
+  ["Delete", "Delete"],
+  ["CapsLock", "CapsLock"],
+  ["Ф", "KeyA"],
+  ["Ы", "KeyS"],
+  ["В", "KeyD"],
+  ["А", "KeyF"],
+  ["П", "KeyG"],
+  ["Р", "KeyH"],
+  ["О", "KeyJ"],
+  ["Л", "KeyK"],
+  ["Д", "KeyL"],
+  ["Ж", "Semicolon"],
+  ["Э", "Quote"],
+  ["Enter", "Enter"],
+  ["Shift", "ShiftLeft"],
+  ["Я", "KeyZ"],
+  ["Ч", "KeyX"],
+  ["С", "KeyC"],
+  ["М", "KeyV"],
+  ["И", "KeyB"],
+  ["Т", "KeyN"],
+  ["Ь", "KeyM"],
+  ["Б", "Comma"],
+  ["Ю", "Period"],
+  [".", "Slash"],
+  ["Shift", "ShiftRight"],
+  ["AU", "ArrowUp"],
+  ["Control", "ControlLeft"],
+  ["Meta", "MetaLeft"],
+  ["Alt", "AltLeft"],
+  [" ", "Space"],
+  ["Control", "ControlLeft"],
+  ["Alt", "AltRight"],
+  ["Meta", "MetaRight"],
+  ["Control", "ControlRight"],
+  ["AL", "ArrowLeft"],
+  ["AD", "ArrowDown"],
+  ["AR", "ArrowRight"],
 ];
 
 const wrapper = document.createElement("div");
@@ -144,26 +144,19 @@ const Main = {
   alt: false,
   shift: false,
 
-  layout(lang, letterCase) {
-    for (let i = 0; i < lang.length; i++) {
+  layout(lang) {
+    for (let i = 0; i < lang.length; i += 1) {
       const container = document.createElement("div");
       container.className = "button";
       container.addEventListener("focus", () => {
         this.keyEvents();
       });
 
-      let key;
-      let code;
+      const key = lang[i][0];
+      const code = lang[i][1];
+      container.className = `button ${code}`;
 
-      for (const k in lang[i]) {
-        if (k) {
-          key = k;
-          code = lang[i][k];
-          container.className = `button ${code}`;
-        }
-      }
-
-      const keyDiv = `<div class='key ${code} ${key}' >${key}</div>`;
+      const keyDiv = `<div class='key  ${key}' >${key}</div>`;
       container.innerHTML = keyDiv;
       wrapper.appendChild(container);
 
@@ -178,7 +171,7 @@ const Main = {
       return;
     }
     const activeKey = document.querySelector(`.${e.code}`);
-    activeKey.parentNode.classList.toggle("active");
+    activeKey.classList.toggle("active");
   },
 
   keyEvents(key, div) {
@@ -186,7 +179,6 @@ const Main = {
       case "CapsLock":
         div.addEventListener("click", () => {
           this.caps = !this.caps;
-          console.log(this.caps);
 
           input.focus();
         });
@@ -258,7 +250,7 @@ const Main = {
           input.focus();
         });
         break;
-      case "ArrowLeft":
+      case "AL":
         div.addEventListener("click", () => {
           const pos = input.selectionStart;
 
@@ -266,7 +258,7 @@ const Main = {
           input.focus();
         });
         break;
-      case "ArrowRight":
+      case "AR":
         div.addEventListener("click", () => {
           const pos = input.selectionStart;
 
