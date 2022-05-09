@@ -186,9 +186,10 @@ class Main {
     if (e.key === 'Alt') {
       e.preventDefault();
     }
+    if(document.querySelector(`.${e.code}`)) {
     const activeKey = document.querySelector(`.${e.code}`);
-
     activeKey.classList.toggle('active');
+    }
     this.input.focus();
   }
 
