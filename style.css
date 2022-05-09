@@ -1,7 +1,7 @@
 
 
 body {
-    width: 990px;
+    width: 1010px;
     height: auto;
 }
 
@@ -13,7 +13,7 @@ body {
     padding: 20px 30px 20px 30px;
     background-color: bisque;
     flex-wrap: wrap;
-    gap:6px;
+    gap:8px;
     
 }
 
@@ -25,6 +25,9 @@ body {
     height: 35px;
     align-items: center;
     justify-content: center;
+
+    border-radius: 10px;
+  box-shadow: 0 5px #999;
     }
 
   
@@ -39,5 +42,17 @@ textarea {
     height: 100px;
 }
 
+
+.button:hover {
+    cursor: pointer;
+    background-color: rgb(170, 124, 188);
+}
+
+
+.button:active {
+    background-color: blueviolet;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+}
 
 

@@ -85,7 +85,7 @@ const keysRU = [
   ["ц", "KeyW"],
   ["у", "KeyE"],
   ["к", "KeyR"],
-  ["еt", "KeyT"],
+  ["е", "KeyT"],
   ["н", "KeyY"],
   ["г", "KeyU"],
   ["ш", "KeyI"],
