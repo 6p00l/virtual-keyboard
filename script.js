@@ -1,5 +1,5 @@
 const input = document.getElementById("input_main");
-let enLang = true;
+
 const keysEN = [
   ["`", "Backquote"],
   [1, "Digit1"],
@@ -65,10 +65,9 @@ const keysEN = [
   ["AD", "ArrowDown"],
   ["AR", "ArrowRight"],
 ];
-
 const keysRU = [
-  ["ё", "Backquote"],
-  [1, "Digit1"],
+  ["`", "Backquote"],
+  [12, "Digit1"],
   [2, "Digit2"],
   [3, "Digit3"],
   [4, "Digit4"],
@@ -82,53 +81,50 @@ const keysRU = [
   ["=", "Equal"],
   ["Backspace", "Backspace"],
   ["Tab", "Tab"],
-  ["й", "KeyQ"],
-  ["ц", "KeyW"],
-  ["у", "KeyE"],
-  ["к", "KeyR"],
-  ["е", "KeyT"],
-  ["н", "KeyY"],
-  ["г", "KeyU"],
-  ["ш", "KeyI"],
-  ["щ", "KeyO"],
-  ["з", "KeyP"],
-  ["х", "BracketLeft"],
-  ["ъ", "BracketRight"],
-  ["\\", "Backslash"],
+  ["q", "KeyQ"],
+  ["w", "KeyW"],
+  ["e", "KeyE"],
+  ["r", "KeyR"],
+  ["t", "KeyT"],
+  ["y", "KeyY"],
+  ["u", "KeyU"],
+  ["i", "KeyI"],
+  ["o", "KeyO"],
+  ["p", "KeyP"],
+  ["[", "BracketLeft"],
+  ["]", "BracketRight"],
   ["Delete", "Delete"],
   ["CapsLock", "CapsLock"],
-  ["Ф", "KeyA"],
-  ["Ы", "KeyS"],
-  ["В", "KeyD"],
-  ["А", "KeyF"],
-  ["П", "KeyG"],
-  ["Р", "KeyH"],
-  ["О", "KeyJ"],
-  ["Л", "KeyK"],
-  ["Д", "KeyL"],
-  ["Ж", "Semicolon"],
-  ["Э", "Quote"],
+  ["a", "KeyA"],
+  ["s", "KeyS"],
+  ["d", "KeyD"],
+  ["f", "KeyF"],
+  ["g", "KeyG"],
+  ["h", "KeyH"],
+  ["j", "KeyJ"],
+  ["k", "KeyK"],
+  ["l", "KeyL"],
+  [";", "Semicolon"],
+  ["'", "Quote"],
+  ["\\", "Backslash"],
   ["Enter", "Enter"],
   ["Shift", "ShiftLeft"],
-  ["Я", "KeyZ"],
-  ["Ч", "KeyX"],
-  ["С", "KeyC"],
-  ["М", "KeyV"],
-  ["И", "KeyB"],
-  ["Т", "KeyN"],
-  ["Ь", "KeyM"],
-  ["Б", "Comma"],
-  ["Ю", "Period"],
-  [".", "Slash"],
-  ["Shift", "ShiftRight"],
+  ["z", "KeyZ"],
+  ["x", "KeyX"],
+  ["c", "KeyC"],
+  ["v", "KeyV"],
+  ["b", "KeyB"],
+  ["n", "KeyN"],
+  ["m", "KeyM"],
+  [",", "Comma"],
+  [".", "Period"],
+  ["/", "Slash"],
   ["AU", "ArrowUp"],
+  ["Shift", "ShiftRight"],
   ["Control", "ControlLeft"],
-  ["Meta", "MetaLeft"],
   ["Alt", "AltLeft"],
   [" ", "Space"],
-  ["Control", "ControlLeft"],
   ["Alt", "AltRight"],
-  ["Meta", "MetaRight"],
   ["Control", "ControlRight"],
   ["AL", "ArrowLeft"],
   ["AD", "ArrowDown"],
@@ -165,7 +161,7 @@ const Main = {
     }
   },
   clone(e) {
-    if (e.key == "Tab") {
+    if (e.key === "Tab") {
       e.preventDefault();
       input.value += "\t";
       return;
@@ -214,13 +210,9 @@ const Main = {
       case "Alt":
         div.addEventListener("click", () => {
           if (this.shift) {
-            wrapper.innerHTML = "";
+            this.reLang();
+          } else this.alt = !this.alt;
 
-            this.layout(keysRU);
-            this.shift = false;
-            this.alt = false;
-          }
-          this.alt = !this.alt;
           div.classList.toggle("active");
           input.focus();
         });
@@ -228,13 +220,10 @@ const Main = {
       case "Shift":
         div.addEventListener("click", () => {
           if (this.alt) {
-            wrapper.innerHTML = "";
-            this.layout(keysRU);
-            this.shift = false;
-            this.alt = false;
-          }
+            this.reLang();
+          } else this.shift = !this.shift;
+
           div.classList.toggle("active");
-          this.shift = !this.shift;
           input.focus();
         });
 
@@ -278,6 +267,8 @@ const Main = {
         break;
 
       case "Control":
+        input.focus();
+
         break;
       default:
         div.addEventListener("click", () => {
@@ -300,10 +291,33 @@ const Main = {
     input.addEventListener("keydown", (e) => this.clone(e));
     input.addEventListener("keyup", (e) => this.clone(e));
   },
+
+  reLang() {
+    if (!localStorage.getItem("lang")) {
+      console.log(123);
+      localStorage.setItem("lang", "EN");
+    }
+    wrapper.innerHTML = "";
+    console.log(localStorage.getItem("lang"));
+
+    this.shift = false;
+    this.alt = false;
+    if (localStorage.getItem("lang") === "EN") {
+      this.layout(keysRU);
+      localStorage.setItem("lang", "RU");
+    } else {
+      this.layout(keysEN);
+      localStorage.setItem("lang", "EN");
+    }
+  },
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-  Main.layout(keysEN, Main.caps);
+  let lang = localStorage.getItem("lang");
+  if (lang === "RU") {
+    Main.layout(keysRU);
+  } else Main.layout(keysEN);
+
   Main.shiftKey = document.querySelector(".Shift").parentNode;
   Main.altKey = document.querySelector(".Alt").parentNode;
 });
