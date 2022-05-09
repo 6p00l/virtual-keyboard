@@ -1,17 +1,15 @@
-const input = document.getElementById("input_main");
-
 const keysEN = [
   ["`", "Backquote"],
-  [1, "Digit1"],
-  [2, "Digit2"],
-  [3, "Digit3"],
-  [4, "Digit4"],
-  [5, "Digit5"],
-  [6, "Digit6"],
-  [7, "Digit7"],
-  [8, "Digit8"],
-  [9, "Digit9"],
-  [0, "Digit0"],
+  ["1", "Digit1"],
+  ["2", "Digit2"],
+  ["3", "Digit3"],
+  ["4", "Digit4"],
+  ["5", "Digit5"],
+  ["6", "Digit6"],
+  ["7", "Digit7"],
+  ["8", "Digit8"],
+  ["9", "Digit9"],
+  ["0", "Digit0"],
   ["-", "Minus"],
   ["=", "Equal"],
   ["Backspace", "Backspace"],
@@ -67,16 +65,16 @@ const keysEN = [
 ];
 const keysRU = [
   ["`", "Backquote"],
-  [1, "Digit1"],
-  [2, "Digit2"],
-  [3, "Digit3"],
-  [4, "Digit4"],
-  [5, "Digit5"],
-  [6, "Digit6"],
-  [7, "Digit7"],
-  [8, "Digit8"],
-  [9, "Digit9"],
-  [0, "Digit0"],
+  ["1", "Digit1"],
+  ["2", "Digit2"],
+  ["3", "Digit3"],
+  ["4", "Digit4"],
+  ["5", "Digit5"],
+  ["6", "Digit6"],
+  ["7", "Digit7"],
+  ["8", "Digit8"],
+  ["9", "Digit9"],
+  ["0", "Digit0"],
   ["-", "Minus"],
   ["=", "Equal"],
   ["Backspace", "Backspace"],
@@ -132,13 +130,18 @@ const keysRU = [
 ];
 
 const wrapper = document.createElement("div");
+const textarea =
+  "<div className='textarea'><textarea value=''></textarea></div>";
 wrapper.className = "wrapper";
+document.body.innerHTML = textarea;
 document.body.appendChild(wrapper);
+const input = document.querySelector("textarea");
 
 const Main = {
   caps: false,
   alt: false,
   shift: false,
+  tab: false,
 
   layout(lang) {
     for (let i = 0; i < lang.length; i += 1) {
@@ -157,16 +160,23 @@ const Main = {
       wrapper.appendChild(container);
 
       this.keyEvents(key, container);
-      this.realEvents();
     }
+    this.realEvents();
   },
   clone(e) {
     if (e.key === "Tab") {
-      e.preventDefault();
-      input.value += "\t";
-      return;
+      if (!this.tab) {
+        e.preventDefault();
+        const pos = input.selectionStart;
+        input.value = `${input.value.slice(0, pos)}\t${input.value.slice(pos)}`;
+        input.selectionStart = pos + 1;
+        input.selectionEnd = pos + 1;
+
+        this.tab = !this.tab;
+      } else this.tab = !this.tab;
     }
     const activeKey = document.querySelector(`.${e.code}`);
+
     activeKey.classList.toggle("active");
   },
 
@@ -175,7 +185,7 @@ const Main = {
       case "CapsLock":
         div.addEventListener("click", () => {
           this.caps = !this.caps;
-
+          div.classList.toggle("active");
           input.focus();
         });
         break;
@@ -185,6 +195,7 @@ const Main = {
 
           input.value = input.value.slice(0, pos - 1) + input.value.slice(pos);
           input.selectionStart = pos - 1;
+          input.selectionEnd = pos - 1;
           input.focus();
         });
         break;
@@ -196,6 +207,7 @@ const Main = {
             pos
           )}`;
           input.selectionStart = pos + 1;
+          input.selectionEnd = pos + 1;
           input.focus();
         });
         break;
@@ -204,6 +216,7 @@ const Main = {
           const pos = input.selectionStart;
           input.value = input.value.slice(0, pos) + input.value.slice(pos + 1);
           input.selectionStart = pos;
+          input.selectionEnd = pos;
           input.focus();
         });
         break;
@@ -236,6 +249,7 @@ const Main = {
             pos
           )}`;
           input.selectionStart = pos + 1;
+          input.selectionEnd = pos + 1;
           input.focus();
         });
         break;
@@ -244,6 +258,7 @@ const Main = {
           const pos = input.selectionStart;
 
           input.selectionStart = pos - 1;
+          input.selectionEnd = pos - 1;
           input.focus();
         });
         break;
@@ -252,23 +267,41 @@ const Main = {
           const pos = input.selectionStart;
 
           input.selectionStart = pos + 1;
+          input.selectionEnd = pos + 1;
           input.focus();
         });
         break;
-      case "ArrowUp":
+      case "AU":
         div.addEventListener("click", () => {
+          const pos = input.selectionStart;
+          input.value = `${input.value.slice(0, pos)}⮝${input.value.slice(
+            pos
+          )}`;
+          input.selectionStart = pos + 1;
+          input.selectionEnd = pos + 1;
           input.focus();
-          const test = new KeyboardEvent("keydown", { code: "ArrowUp" });
-          input.dispatchEvent(test);
-          input.focus();
+          div.classList.toggle("active");
+          setTimeout(() => div.classList.toggle("active"), 200);
         });
         break;
-      case "ArrowDown":
+      case "AD":
+        div.addEventListener("click", () => {
+          const pos = input.selectionStart;
+          input.value = `${input.value.slice(0, pos)}⮟${input.value.slice(
+            pos
+          )}`;
+          input.selectionStart = pos + 1;
+          input.selectionEnd = pos + 1;
+          input.focus();
+          div.classList.toggle("active");
+          setTimeout(() => div.classList.toggle("active"), 200);
+        });
         break;
 
       case "Control":
-        input.focus();
-
+        div.addEventListener("click", () => {
+          input.focus();
+        });
         break;
       default:
         div.addEventListener("click", () => {
@@ -280,6 +313,7 @@ const Main = {
           input.value =
             input.value.slice(0, pos) + letter + input.value.slice(pos);
           input.selectionStart = pos + 1;
+          input.selectionEnd = pos + 1;
           input.focus();
           div.classList.toggle("active");
           setTimeout(() => div.classList.toggle("active"), 200);
@@ -294,12 +328,9 @@ const Main = {
 
   reLang() {
     if (!localStorage.getItem("lang")) {
-      console.log(123);
       localStorage.setItem("lang", "EN");
     }
     wrapper.innerHTML = "";
-    console.log(localStorage.getItem("lang"));
-
     this.shift = false;
     this.alt = false;
     if (localStorage.getItem("lang") === "EN") {
@@ -309,11 +340,14 @@ const Main = {
       this.layout(keysEN);
       localStorage.setItem("lang", "EN");
     }
+    if (this.caps === true) {
+      document.querySelector(".CapsLock").classList.toggle("active");
+    }
   },
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-  let lang = localStorage.getItem("lang");
+  const lang = localStorage.getItem("lang");
   if (lang === "RU") {
     Main.layout(keysRU);
   } else Main.layout(keysEN);
