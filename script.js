@@ -172,7 +172,7 @@ class Main {
     this.realEvents();
   }
 
-  clone(e) {
+  clone(e, act) {
     if (e.key === 'Tab') {
       if (!this.tab) {
         e.preventDefault();
@@ -346,8 +346,8 @@ class Main {
   }
 
   realEvents() {
-    this.input.addEventListener('keydown', (e) => this.clone(e));
-    this.input.addEventListener('keyup', (e) => this.clone(e));
+    this.input.addEventListener('keydown', (e) => this.clone(e, true));
+    this.input.addEventListener('keyup', (e) => this.clone(e, false));
   }
 
   reLang() {
