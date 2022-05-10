@@ -135,7 +135,11 @@ class Main {
     this.textarea = "<div className='textarea'><textarea value=''></textarea></div>";
     this.wrapper.className = 'wrapper';
     document.body.innerHTML = this.textarea;
+    this.shortcut = document.createElement('div');
+    this.shortcut.innerHTML = '<div\'>alt+shift</div>';
+    this.shortcut.className = 'shortcut';
     document.body.appendChild(this.wrapper);
+    document.body.appendChild(this.shortcut);
     this.input = document.querySelector('textarea');
   }
 
@@ -186,9 +190,9 @@ class Main {
     if (e.key === 'Alt') {
       e.preventDefault();
     }
-    if(document.querySelector(`.${e.code}`)) {
-    const activeKey = document.querySelector(`.${e.code}`);
-    activeKey.classList.toggle('active');
+    if (document.querySelector(`.${e.code}`)) {
+      const activeKey = document.querySelector(`.${e.code}`);
+      activeKey.classList.toggle('active');
     }
     this.input.focus();
   }

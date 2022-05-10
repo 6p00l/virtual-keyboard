@@ -61,3 +61,11 @@ textarea {
     box-shadow: 0 5px #666;
     transform: translateY(3px);
 }
+
+.shortcut {
+    font-size: 30px;
+    margin: 0;
+    margin-left: 500px;
+    background-color: aquamarine;
+    width: 105px;
+}
