@@ -187,6 +187,7 @@ class Main {
         this.tab = !this.tab;
       } else this.tab = !this.tab;
     }
+
     if (e.key === 'Alt') {
       e.preventDefault();
     }
