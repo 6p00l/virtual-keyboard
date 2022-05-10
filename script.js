@@ -192,9 +192,7 @@ class Main {
     }
     if (document.querySelector(`.${e.code}`)) {
       const activeKey = document.querySelector(`.${e.code}`);
-      if (act) {
-        activeKey.click();
-      }
+      activeKey.classList.toggle('active');
     }
     this.input.focus();
   }
