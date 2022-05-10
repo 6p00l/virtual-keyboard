@@ -172,7 +172,7 @@ class Main {
     this.realEvents();
   }
 
-  clone(e) {
+  clone(e, act) {
     if (e.key === 'Tab') {
       if (!this.tab) {
         e.preventDefault();
@@ -192,7 +192,9 @@ class Main {
     }
     if (document.querySelector(`.${e.code}`)) {
       const activeKey = document.querySelector(`.${e.code}`);
-      activeKey.classList.toggle('active');
+      if (act) {
+        activeKey.click();
+      }
     }
     this.input.focus();
   }
@@ -345,8 +347,8 @@ class Main {
   }
 
   realEvents() {
-    this.input.addEventListener('keydown', (e) => this.clone(e));
-    this.input.addEventListener('keyup', (e) => this.clone(e));
+    this.input.addEventListener('keydown', (e) => this.clone(e, true));
+    this.input.addEventListener('keyup', (e) => this.clone(e, false));
   }
 
   reLang() {

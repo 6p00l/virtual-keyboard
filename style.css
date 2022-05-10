@@ -40,6 +40,8 @@ body>div {
 
 .active {
     background-color: blueviolet;
+    box-shadow: 0 5px #666;
+    transform: translateY(3px);
 }
 
 textarea {
@@ -58,8 +60,7 @@ textarea {
 
 .button:active {
     background-color: blueviolet;
-    box-shadow: 0 5px #666;
-    transform: translateY(3px);
+
 }
 
 .shortcut {
